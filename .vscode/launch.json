@@ -1,0 +1,65 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in library 'remote_keyboard_mouse_rs'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--lib",
+                    "--package=remote_keyboard_mouse_rs"
+                ],
+                "filter": {
+                    "name": "remote_keyboard_mouse_rs",
+                    "kind": "lib"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'remote_keyboard_mouse_rs'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=remote_keyboard_mouse_rs",
+                    "--package=remote_keyboard_mouse_rs"
+                ],
+                "filter": {
+                    "name": "remote_keyboard_mouse_rs",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'remote_keyboard_mouse_rs'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=remote_keyboard_mouse_rs",
+                    "--package=remote_keyboard_mouse_rs"
+                ],
+                "filter": {
+                    "name": "remote_keyboard_mouse_rs",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}
