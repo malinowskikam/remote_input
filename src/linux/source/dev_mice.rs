@@ -10,6 +10,7 @@ const LMB_FLAG: u8 = 1;
 const RMB_FLAG: u8 = 2;
 const MMB_FLAG: u8 = 4;
 
+#[derive(Default)]
 pub struct DevMiceSource {}
 
 impl DevMiceSource {

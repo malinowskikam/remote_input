@@ -1,18 +1,11 @@
-use remote_input::event::InputEvent;
 use remote_input::sink::{ConsoleSink, InputSink};
-use remote_input::source::{/*VecSource, */ DevMiceSource, InputSource};
+use remote_input::source::{DevMiceSource, InputSource};
 use tokio::sync::mpsc::channel;
 
 #[tokio::main]
 async fn main() {
-    let mut events = vec![];
-    events.push(InputEvent::MouseMoveRel { x: 0.1, y: 0.0 });
-    events.push(InputEvent::MouseMoveRel { x: 0.1, y: 0.1 });
-    events.push(InputEvent::MouseMoveRel { x: 0.0, y: 0.1 });
-
     let (tx, rx) = channel(100);
 
-    // let mut source = VecSource::new(events);
     let mut source = DevMiceSource::new();
     let source_handle = tokio::spawn(async move { source.start_source(tx).await });
 

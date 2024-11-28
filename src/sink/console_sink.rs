@@ -2,6 +2,7 @@ use crate::event::InputEvent;
 use crate::sink::InputSink;
 use tokio::sync::mpsc::Receiver;
 
+#[derive(Default)]
 pub struct ConsoleSink {}
 
 impl ConsoleSink {
