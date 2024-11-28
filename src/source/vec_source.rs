@@ -16,7 +16,7 @@ impl InputSource for VecSource {
     async fn start_source(&mut self, channel: Sender<InputEvent>) {
         for event in &self.events {
             channel
-                .send(event.clone().into())
+                .send(*event)
                 .await
                 .expect("Send Error");
         }
