@@ -16,7 +16,7 @@ jobs:
     
     - name: Checkout
       uses: actions/checkout@v4
-    - name: ⚡ Cache
+    - name: Cache dependencies and target
       uses: actions/cache@v2
       with:
         path: |
