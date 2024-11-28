@@ -1,8 +1,8 @@
+use crate::event::{ButtonState, InputEvent, MouseButton};
+use crate::source::InputSource;
 use tokio::fs::File;
 use tokio::io::AsyncReadExt;
 use tokio::sync::mpsc::Sender;
-use crate::event::{ButtonState, InputEvent, MouseButton};
-use crate::source::InputSource;
 
 const DEV_MICE_PATH: &str = "/dev/input/mice";
 
@@ -21,8 +21,18 @@ impl DevMiceSource {
 macro_rules! handle_button_state {
     ($button_state:expr, $buff:expr, $flag:expr, $button:expr, $channel:expr) => {
         if $button_state & $flag != $buff[0] & $flag {
-            let state = if $buff[0] & $flag != 0 { ButtonState::Down } else { ButtonState::Up };
-            $channel.send(InputEvent::MouseButton {button: $button, state,}).await.expect("Failed to send event");
+            let state = if $buff[0] & $flag != 0 {
+                ButtonState::Down
+            } else {
+                ButtonState::Up
+            };
+            $channel
+                .send(InputEvent::MouseButton {
+                    button: $button,
+                    state,
+                })
+                .await
+                .expect("Failed to send event");
             $button_state ^= $flag;
         }
     };
@@ -30,7 +40,9 @@ macro_rules! handle_button_state {
 
 impl InputSource for DevMiceSource {
     async fn start_source(&mut self, channel: Sender<InputEvent>) {
-        let mut file = File::open(DEV_MICE_PATH).await.expect("Failed to open file");
+        let mut file = File::open(DEV_MICE_PATH)
+            .await
+            .expect("Failed to open file");
         let mut buff = vec![0; 3];
 
         let mut button_state = 0u8;
@@ -39,12 +51,18 @@ impl InputSource for DevMiceSource {
             if bytes_read != 3 {
                 break;
             }
-            
+
             let dx = buff[1] as i8;
             let dy = buff[2] as i8;
-            
+
             if dx != 0 || dy != 0 {
-                channel.send(InputEvent::MouseMoveRel {x: dx as f32, y: dy as f32}).await.expect("Failed to send event");
+                channel
+                    .send(InputEvent::MouseMoveRel {
+                        x: dx as f32,
+                        y: dy as f32,
+                    })
+                    .await
+                    .expect("Failed to send event");
             }
 
             handle_button_state!(button_state, buff, LMB_FLAG, MouseButton::Left, channel);
