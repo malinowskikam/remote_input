@@ -1,3 +1,4 @@
+use log::info;
 use crate::event::InputEvent;
 use crate::source::InputSource;
 use tokio::sync::mpsc::Sender;
@@ -14,6 +15,7 @@ impl VecSource {
 
 impl InputSource for VecSource {
     async fn start_source(&mut self, channel: Sender<InputEvent>) {
+        info!("Starting vec source");
         for event in &self.events {
             channel.send(*event).await.expect("Send Error");
         }
@@ -23,7 +25,7 @@ impl InputSource for VecSource {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::event::{ButtonState, MouseButton};
+    use crate::event::{ButtonState, MouseAxis, MouseButton};
 
     #[tokio::test]
     async fn test_slice_source() {
@@ -32,7 +34,7 @@ mod tests {
             button: MouseButton::Left,
             state: ButtonState::Down,
         });
-        events.push(InputEvent::MouseMoveRel { x: 0.1, y: 0.1 });
+        events.push(InputEvent::MouseMoveRel { axis: MouseAxis::X, value: 0.1 });
         events.push(InputEvent::MouseButton {
             button: MouseButton::Left,
             state: ButtonState::Up,
