@@ -1,3 +1,4 @@
+use log::info;
 use crate::event::InputEvent;
 use crate::sink::InputSink;
 use tokio::sync::mpsc::Receiver;
@@ -13,8 +14,9 @@ impl ConsoleSink {
 
 impl InputSink for ConsoleSink {
     async fn start_sink(&mut self, mut channel: Receiver<InputEvent>) {
+        info!("Starting console sink");
         while let Some(event) = channel.recv().await {
-            println!("Console sink: {:?}", event);
+            println!("Event: {:?}", event);
         }
     }
 }
