@@ -6,6 +6,13 @@ pub enum MouseButton {
 }
 
 #[derive(Debug, PartialEq, Clone, Copy)]
+pub enum MouseAxis {
+    X,
+    Y,
+    Wheel,
+}
+
+#[derive(Debug, PartialEq, Clone, Copy)]
 pub enum ButtonState {
     Up,
     Down,
@@ -17,12 +24,8 @@ pub enum InputEvent {
         button: MouseButton,
         state: ButtonState,
     },
-    MouseMoveAbs {
-        x: f32,
-        y: f32,
-    },
     MouseMoveRel {
-        x: f32,
-        y: f32,
+        axis: MouseAxis,
+        value: f32,
     },
 }
