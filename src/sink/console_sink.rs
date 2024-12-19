@@ -1,6 +1,6 @@
-use log::info;
 use crate::event::InputEvent;
 use crate::sink::InputSink;
+use log::info;
 use tokio::sync::mpsc::Receiver;
 
 #[derive(Default)]

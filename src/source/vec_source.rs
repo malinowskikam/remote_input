@@ -1,6 +1,6 @@
-use log::info;
 use crate::event::InputEvent;
 use crate::source::InputSource;
+use log::info;
 use tokio::sync::mpsc::Sender;
 
 pub struct VecSource {
@@ -34,7 +34,10 @@ mod tests {
             button: MouseButton::Left,
             state: ButtonState::Down,
         });
-        events.push(InputEvent::MouseMoveRel { axis: MouseAxis::X, value: 0.1 });
+        events.push(InputEvent::MouseMoveRel {
+            axis: MouseAxis::X,
+            value: 0.1,
+        });
         events.push(InputEvent::MouseButton {
             button: MouseButton::Left,
             state: ButtonState::Up,

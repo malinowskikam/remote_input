@@ -1,8 +1,3 @@
-// pub mod events;
-
-// pub mod packet;
-// pub mod server;
-
 pub mod event;
 
 pub mod source;
