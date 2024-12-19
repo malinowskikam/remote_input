@@ -19,5 +19,5 @@ evdev = { version = "0.12.2", optional = true }
 [features]
 default = ["evdev", "x11"]
 evdev = ["dep:evdev"]
-dev_mice = []
+mice_file = []
 x11 = ["dep:x11rb"]
